@@ -5,12 +5,13 @@
 import pygame, sys, random, math
 from collections import deque
 from tkinter import messagebox, Tk
+import time
 
 size = (width, height) = 640, 480
 pygame.init()
 
 win = pygame.display.set_mode(size)
-pygame.display.set_caption("Dijktdtra's Path Finding")
+pygame.display.set_caption("Dijkstra's Pathfinding")
 clock = pygame.time.Clock()
 
 cols, rows = 64, 48
@@ -81,6 +82,8 @@ queue.append(start)
 start.visited = True
 
 def main():
+    totaltiles=1
+    pathlength=1
     flag = False
     noflag = True
     startflag = False
@@ -101,16 +104,21 @@ def main():
                     startflag = True
 
         if startflag:
+            t1_start= time.time()
             if len(queue) > 0:
                 current = queue.popleft()
                 if current == end:
                     temp = current
                     while temp.prev:
+                        pathlength+=1
                         path.append(temp.prev)
                         temp = temp.prev 
                     if not flag:
                         flag = True
+                        print("Total Tiles Checked:",totaltiles)
+                        print("Path Length:",pathlength)
                         print("Done")
+                        print(f"Execution Time: {((time.time()-t1_start)*10**5):.05f}ms")
                     elif flag:
                         continue
                 if flag == False:
@@ -119,6 +127,7 @@ def main():
                             i.visited = True
                             i.prev = current
                             queue.append(i)
+                            totaltiles+=1
             else:
                 if noflag and not flag:
                     Tk().wm_withdraw()

@@ -4,13 +4,14 @@
 
 import pygame, sys, random, math
 from tkinter import messagebox, Tk
+import time
 
 size = (width, height) = 600, 600
 
 pygame.init()
 
 win = pygame.display.set_mode(size)
-
+pygame.display.set_caption("A* Pathfinding")
 clock = pygame.time.Clock()
 
 cols, rows = 50, 50
@@ -19,6 +20,8 @@ cols, rows = 50, 50
 grid = []
 openSet, closeSet = [], []
 path = []
+
+start_time=0
 
 w = width//cols
 h = height//rows
@@ -90,12 +93,15 @@ def close():
     pygame.quit()
     sys.exit()
 
-def main():
+def main(t1_start):
+    totaltiles=1
+    pathlength=1
     flag = False
     noflag = True
     startflag = False
 
     while True:
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 close()
@@ -110,6 +116,7 @@ def main():
                     startflag = True
 
         if startflag:
+            t1_start= time.time()
             if len(openSet) > 0:
                 winner = 0
                 for i in range(len(openSet)):
@@ -121,18 +128,22 @@ def main():
                 if current == end:
                     temp = current
                     while temp.prev:
+                        totaltiles+=1
                         path.append(temp.prev)
                         temp = temp.prev 
                     if not flag:
                         flag = True
+                        print("Total Tiles Checked:",totaltiles)
+                        print("Path Length:",pathlength)
                         print("Done")
+                        print(f"Execution Time: {((time.time()-t1_start)*10**5):.05f}ms")
                     elif flag:
                         continue
 
                 if flag == False:
                     openSet.remove(current)
                     closeSet.append(current)
-
+                    
                     for neighbor in current.neighbors:
                         if neighbor in closeSet or neighbor.wall:
                             continue
@@ -147,12 +158,13 @@ def main():
                             neighbor.g = tempG
                             newPath = True
                             openSet.append(neighbor)
+                            pathlength+=1
                         
                         if newPath:
                             neighbor.h = heuristics(neighbor, end)
                             neighbor.f = neighbor.g + neighbor.h
                             neighbor.prev = current
-
+                            
             else:
                 if noflag:
                     Tk().wm_withdraw()
@@ -177,5 +189,9 @@ def main():
                     pass
                 
         pygame.display.flip()
+        #t2_stop = process_time()
+        
+        
+main(start_time)
 
-main()
+
