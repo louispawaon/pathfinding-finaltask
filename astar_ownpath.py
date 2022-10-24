@@ -109,7 +109,7 @@ def main():
                     clickWall(pygame.mouse.get_pos(), event.buttons[0]) 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
-                    pygame.image.save(win, "AStar.png")
+                    pygame.image.save(win, "AStar_Start.png")
                     t1_start= time.time()
                     startflag = True
 
@@ -134,6 +134,7 @@ def main():
                         print("Path Length:",pathlength)
                         print("Done")
                         print("Executed Time",time.time()-t1_start)
+                        pygame.image.save(win, "AStar_End.png")
                     elif flag:
                         continue
 

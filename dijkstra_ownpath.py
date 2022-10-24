@@ -100,7 +100,7 @@ def main():
                     clickWall(pygame.mouse.get_pos(), event.buttons[0])
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
-                    pygame.image.save(win, "Dijkstra.png")
+                    pygame.image.save(win, "Dijkstra_Start.png")
                     t1_start=time.time()
                     startflag = True
 
@@ -115,10 +115,11 @@ def main():
                         temp = temp.prev 
                     if not flag:
                         flag = True
-                        t2_start=time.time()
                         print("Total Tiles Checked:",totaltiles)
                         print("Path Length:",pathlength)
                         print("Done")
+                        print("Executed time", time.time()-t1_start)
+                        pygame.image.save(win, "Dijkstra_End.png")
                     elif flag:
                         continue
                 if flag == False:
