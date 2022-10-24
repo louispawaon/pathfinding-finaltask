@@ -1,12 +1,8 @@
-#add elapsed time 
-#add tiles checked
-#add total tiles checked
-
 import pygame, sys, random, math
 from tkinter import messagebox, Tk
 import time
 
-size = (width, height) = 600, 600
+size = (width, height) = 640, 480
 
 pygame.init()
 
@@ -14,14 +10,12 @@ win = pygame.display.set_mode(size)
 pygame.display.set_caption("A* Pathfinding")
 clock = pygame.time.Clock()
 
-cols, rows = 50, 50
+cols, rows = 64, 48
 
 
 grid = []
 openSet, closeSet = [], []
 path = []
-
-start_time=0
 
 w = width//cols
 h = height//rows
@@ -93,7 +87,9 @@ def close():
     pygame.quit()
     sys.exit()
 
-def main(t1_start):
+def main():
+    t1_start=0
+    t2_start=0
     totaltiles=1
     pathlength=1
     flag = False
@@ -113,10 +109,10 @@ def main(t1_start):
                     clickWall(pygame.mouse.get_pos(), event.buttons[0]) 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
+                    t1_start= time.time()
                     startflag = True
 
         if startflag:
-            t1_start= time.time()
             if len(openSet) > 0:
                 winner = 0
                 for i in range(len(openSet)):
@@ -128,7 +124,7 @@ def main(t1_start):
                 if current == end:
                     temp = current
                     while temp.prev:
-                        totaltiles+=1
+                        pathlength+=1
                         path.append(temp.prev)
                         temp = temp.prev 
                     if not flag:
@@ -136,7 +132,7 @@ def main(t1_start):
                         print("Total Tiles Checked:",totaltiles)
                         print("Path Length:",pathlength)
                         print("Done")
-                        print(f"Execution Time: {((time.time()-t1_start)*10**5):.05f}ms")
+                        print("Executed Time",time.time()-t1_start)
                     elif flag:
                         continue
 
@@ -158,7 +154,7 @@ def main(t1_start):
                             neighbor.g = tempG
                             newPath = True
                             openSet.append(neighbor)
-                            pathlength+=1
+                            totaltiles+=1
                         
                         if newPath:
                             neighbor.h = heuristics(neighbor, end)
@@ -174,7 +170,8 @@ def main(t1_start):
         win.fill((0, 20, 20))
         for i in range(cols):
             for j in range(rows):
-                spot = grid[j][i]
+                #t2_start=time.time()
+                spot = grid[i][j]
                 spot.show(win, (255, 255, 255))
                 if flag and spot in path:
                     spot.show(win, (25, 120, 250))
@@ -189,9 +186,8 @@ def main(t1_start):
                     pass
                 
         pygame.display.flip()
-        #t2_stop = process_time()
         
         
-main(start_time)
+main()
 
 

@@ -1,6 +1,4 @@
-#add elapsed time 
-#add tiles checked
-#add total tiles checked
+#fix execution time
 
 import pygame, sys, random, math
 from collections import deque
@@ -82,6 +80,7 @@ queue.append(start)
 start.visited = True
 
 def main():
+    t1_start=0
     totaltiles=1
     pathlength=1
     flag = False
@@ -101,10 +100,10 @@ def main():
                     clickWall(pygame.mouse.get_pos(), event.buttons[0])
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
+                    t1_start=time.time()
                     startflag = True
 
         if startflag:
-            t1_start= time.time()
             if len(queue) > 0:
                 current = queue.popleft()
                 if current == end:
@@ -115,10 +114,10 @@ def main():
                         temp = temp.prev 
                     if not flag:
                         flag = True
+                        t2_start=time.time()
                         print("Total Tiles Checked:",totaltiles)
                         print("Path Length:",pathlength)
                         print("Done")
-                        print(f"Execution Time: {((time.time()-t1_start)*10**5):.05f}ms")
                     elif flag:
                         continue
                 if flag == False:
