@@ -1,7 +1,9 @@
+#add elapsed time 
+#add tiles checked
+#add total tiles checked
+
 import pygame, sys, random, math
 from tkinter import messagebox, Tk
-
-
 
 size = (width, height) = 600, 600
 

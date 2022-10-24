@@ -1,4 +1,6 @@
-"""Djikstra's Path Finding"""
+#add elapsed time 
+#add tiles checked
+#add total tiles checked
 
 import pygame, sys, random, math
 from collections import deque
@@ -30,8 +32,6 @@ class Spot:
         self.visited = False
         if (i+j)%7 == 0:
             self.wall == True
-        # if random.randint(0, 100) < 20:
-        #     self.wall = True
         
     def show(self, win, col, shape= 1):
         if self.wall == True:
@@ -50,17 +50,7 @@ class Spot:
             self.neighbors.append(grid[self.x][self.y+1])
         if self.y > 0:
             self.neighbors.append(grid[self.x][self.y-1])
-        #Add Diagonals
-        # if self.x < cols - 1 and self.y < rows - 1:
-        #     self.neighbors.append(grid[self.x+1][self.y+1])
-        # if self.x < cols - 1 and self.y > 0:
-        #     self.neighbors.append(grid[self.x+1][self.y-1])
-        # if self.x > 0 and self.y < rows - 1:
-        #     self.neighbors.append(grid[self.x-1][self.y+1])
-        # if self.x > 0 and self.y > 0:
-        #     self.neighbors.append(grid[self.x-1][self.y-1])
-
-
+            
 def clickWall(pos, state):
     i = pos[0] // w
     j = pos[1] // h
