@@ -90,6 +90,7 @@ def main():
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                pygame.image.save(win, "Dijkstra_End.png")
                 pygame.quit()
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -119,7 +120,6 @@ def main():
                         print("Path Length:",pathlength)
                         print("Done")
                         print("Executed time", time.time()-t1_start)
-                        pygame.image.save(win, "Dijkstra_End.png")
                     elif flag:
                         continue
                 if flag == False:

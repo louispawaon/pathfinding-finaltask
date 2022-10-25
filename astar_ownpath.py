@@ -84,6 +84,7 @@ end = grid[cols - cols//2][rows - cols//4]
 openSet.append(start)
 
 def close():
+    pygame.image.save(win, "AStar_End.png")
     pygame.quit()
     sys.exit()
 
@@ -134,7 +135,7 @@ def main():
                         print("Path Length:",pathlength)
                         print("Done")
                         print("Executed Time",time.time()-t1_start)
-                        pygame.image.save(win, "AStar_End.png")
+                        
                     elif flag:
                         continue
 
